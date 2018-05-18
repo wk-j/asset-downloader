@@ -18,6 +18,7 @@ let private createRawPath owner repo path =
       let br = "master"
       sprintf "https://raw.githubusercontent.com/%s/%s/%s/%s" owner repo br path
 
+[<CompiledName("Download")>]
 let download (release:Release) pass =
     let createToken(pass) = Credentials(pass)
     client.Credentials <- createToken pass
@@ -35,6 +36,7 @@ let download (release:Release) pass =
     let result = release.Assets |> Seq.map download |> Seq.toList
     (result)
 
+[<CompiledName("FindRelease")>]
 let findRelease owner repo version pass =
     let createToken(pass) = Credentials(pass)
     client.Credentials <- createToken pass
@@ -44,6 +46,7 @@ let findRelease owner repo version pass =
         try
             client.Repository.Release.GetAll(owner, repo).Result |> Seq.toList
         with ex ->
+            Console.WriteLine(ex.Message)
             []
 
     let createInfo release =
