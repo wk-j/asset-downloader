@@ -7,5 +7,9 @@
 using static AssetDownloader.HttpClient;
 
 var token = System.Environment.GetEnvironmentVariable("GITHUB_TOKEN");
-var rs = FindRelease("bcircle","capture-service","*",token);
-Console.WriteLine(rs);
+var rs = FindRelease("bcircle", "capture-service", "*", token);
+var release = rs.Release();
+
+var files = Download(release, token);
+
+Console.WriteLine(files.First());

@@ -11,6 +11,11 @@ type ReleaseInfo =
     | Valid of org: string * repo:string * version: string * Release
     | NotFound of org: string * repo:string * version: string
 
+    member x.Release() =
+        match x with
+        | Valid (_,_,_, release) -> release
+        | NotFound _ -> null
+
 let private product = ProductHeaderValue("my-cool-app")
 let private client = GitHubClient(product)
 
