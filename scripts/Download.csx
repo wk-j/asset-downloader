@@ -3,13 +3,12 @@
 #r "../publish/out/Octokit.dll"
 #r "../packages/FSharp.Core/lib/net45/FSharp.Core.dll"
 
-
 using static AssetDownloader.HttpClient;
 
 var token = System.Environment.GetEnvironmentVariable("GITHUB_TOKEN");
-var rs = FindRelease("bcircle", "capture-service", "*", token);
+var query = new QueryParams(owner: "bcircle", repo: "capture-service", version: "*", token: token);
+var rs = FindRelease(query);
 var release = rs.Release();
-
 var files = Download(release, token);
 
 Console.WriteLine(files.First());

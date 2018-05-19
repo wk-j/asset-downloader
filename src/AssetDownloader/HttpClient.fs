@@ -7,6 +7,12 @@ open System.Net
 open System.Linq
 open System
 
+type QueryParams =
+    { Owner: string
+      Repo: string
+      Token: string
+      Version: string }
+
 type ReleaseInfo =
     | Valid of org: string * repo:string * version: string * Release
     | NotFound of org: string * repo:string * version: string
@@ -42,11 +48,12 @@ let download (release:Release) pass =
     (result)
 
 [<CompiledName("FindRelease")>]
-let findRelease owner repo version pass =
-    let createToken(pass) = Credentials(pass)
-    client.Credentials <- createToken pass
+let findRelease query =
+    let owner,  repo, version, pass = (query.Owner, query.Repo, query.Version, query.Token)
 
-    let owner,  repo = (owner.ToString(), repo.ToString())
+    if String.IsNullOrEmpty (pass) |> not then
+        client.Credentials <- Credentials(pass)
+
     let release =
         try
             client.Repository.Release.GetAll(owner, repo).Result |> Seq.toList
