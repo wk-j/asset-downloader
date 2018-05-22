@@ -22,6 +22,7 @@ type QueryParams =
     { Owner: string
       Repo: string
       Token: string
+      Output: string
       Version: string }
 
 let private product = ProductHeaderValue("my-cool-app")
@@ -72,7 +73,7 @@ let findRelease query : Release Result =
         | [h] ->  Success h
         | h:: _ ->
             match version with
-            | "*" -> Success h
+            | "latest" -> Success h
             | _ ->
                 match releases |> List.tryFind (fun k -> k.TagName = version) with
                 | Some data -> Success data

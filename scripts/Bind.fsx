@@ -4,9 +4,6 @@ type Result<'T>  =
     | Success of 'T
     | Fail of string
 
-// ('a -> Result<'a> -> )
-//  ('a -> Result<'b>)
-
 let bind f rs =
     match rs with
     | Success data -> f data
@@ -24,7 +21,5 @@ let toString i =
     if i < 0 then Fail "Too small"
     else Success (i.ToString("D10"))
 
-
 parseInt "100" >>= toString
 |> printfn "%A"
-
