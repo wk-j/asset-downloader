@@ -44,7 +44,7 @@ Task("Install")
     .IsDependentOn("Pack")
     .Does(() => {
         Information(info.Version);
-        PS.StartProcess($"dotnet tool install -g wk.{name} --source-feed {currentDir}/publish --version {info.Version}");
+        PS.StartProcess($"dotnet tool install -g wk.{name} --add-source {currentDir}/publish --version {info.Version}");
 });
 
 Task("Reinstall")
