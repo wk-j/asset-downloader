@@ -1,5 +1,8 @@
 ## Download GitHub Assets
 
+[![NuGet](https://img.shields.io/nuget/v/wk.AssetDownloader.svg)](https://www.nuget.org/packages/wk.AssetDownloader)
+[![GitHub release](https://img.shields.io/github/release/wk-j/wk.AssetDownloader.svg?style=flat-square)](https://github.com/wk-j/wk.AssetDownloader/releases)
+
 ```bash
 dotnet tool install -g wk.AssetDownloader
 ```

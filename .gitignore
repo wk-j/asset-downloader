@@ -11,5 +11,11 @@ tools
 publish
 
 .paket
-paket-files
-temp
+.settings
+.classpath
+.project
+.working
+.publish
+
+target
+BenchmarkDotNet.Artifacts
