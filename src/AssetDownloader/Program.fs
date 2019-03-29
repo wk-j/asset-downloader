@@ -14,6 +14,8 @@ let rec parseCommand input args =
         parseCommand tail.Tail { args with Output = tail.Head }
     | "--token" :: tail ->
         parseCommand tail.Tail { args with Token = tail.Head }
+    | "--filter" :: tail ->
+        parseCommand tail.Tail { args with Filter = tail.Head }
     | x :: tail ->
         let mt = Regex.Matches (x, regex)
         if mt.Count > 0 then
@@ -28,7 +30,7 @@ let rec parseCommand input args =
 [<EntryPoint>]
 let main argv =
     let argvList = Array.toList argv
-    let args = parseCommand argvList { Token = ""; Owner = ""; Repo = ""; Version = "lastest"; Output = "." }
+    let args = parseCommand argvList { Token = ""; Owner = ""; Repo = ""; Version = "latest"; Output = "."; Filter = "" }
 
     let temps = downloadAssets args
 

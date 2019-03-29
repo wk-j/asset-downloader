@@ -23,6 +23,7 @@ type QueryParams =
       Repo: string
       Token: string
       Output: string
+      Filter: string
       Version: string }
 
 let private product = ProductHeaderValue("my-cool-app")
@@ -33,7 +34,7 @@ let private createRawPath owner repo path =
       sprintf "https://raw.githubusercontent.com/%s/%s/%s/%s" owner repo br path
 
 [<CompiledName("Download")>]
-let download pass (release:Release) =
+let download pass filter (release:Release) =
     let createToken(pass) = Credentials(pass)
     client.Credentials <- createToken pass
 
@@ -48,19 +49,24 @@ let download pass (release:Release) =
             (temp) |> Success
         with | ex -> Fail (ex.Message)
 
-    let result = release.Assets |> Seq.map download |> Seq.toList
+    let result =
+        release.Assets
+        |> Seq.filter(fun x -> x.Name.Contains(filter : string))
+        |> Seq.map download |> Seq.toList
     (result) |> Success
 
 [<CompiledName("FindRelease")>]
 let findRelease query : Release Result =
-    let owner,  repo, version, pass = (query.Owner, query.Repo, query.Version, query.Token)
+    let owner,  repo, version, pass, filter = (query.Owner, query.Repo, query.Version, query.Token, query.Filter)
 
     if String.IsNullOrEmpty (pass) |> not then
         client.Credentials <- Credentials(pass)
 
     let getReleases repo owner =
         try
-            client.Repository.Release.GetAll((owner: string), repo).Result
+            client.Repository.Release.GetAll((owner: string), repo)
+            |> Async.AwaitTask
+            |> Async.RunSynchronously
             |> Seq.toList
             |> Success
         with ex ->
@@ -83,4 +89,4 @@ let findRelease query : Release Result =
 
 [<CompiledName("DownloadAssets")>]
 let downloadAssets query =
-    findRelease query >>= download (query.Token)
+    findRelease query >>= download (query.Token) (query.Filter)

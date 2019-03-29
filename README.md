@@ -12,13 +12,17 @@ dotnet tool install -g wk.AssetDownloader
 
 ```bash
 wk-asset-downloader owner/repo@version --token token --output output-dir
+wk-asset-downloader owner/repo@version --token token --output output-dir --filter filter
 ```
 
 ## Example
 
 ```bash
-wk-asset-downloader bcircle/capture-service@latest --token $GITHUB_TOKEN --output temp
+wk-asset-downloader bcircle/capture-service@latest --token $GITHUB_TOKEN --output .temp
   Copying to "temp/ScanService-19.0.13.zip"
   Copying to "temp/ScanService.19.0.13.deb"
   Copying to "temp/ScanService.19.0.13.msi"
+
+wk-asset-downloader bcircle/capture-service@latest --token $GITHUB_TOKEN --output .temp --filter .zip
+  Copying to "temp/ScanService-19.0.13.zip"
 ```
