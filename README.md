@@ -1,8 +1,11 @@
-## Download GitHub Assets
+<p align="center">
+    <img src="resource/logo.png" />
+</p>
 
-[![Build Status](https://dev.azure.com/wk-j/asset-downloader/_apis/build/status/wk-j.asset-downloader?branchName=master)](https://dev.azure.com/wk-j/asset-downloader/_build/latest?definitionId=37&branchName=master)
+#
+
+[![Actions](https://github.com/wk-j/asset-downloader/workflows/NuGet/badge.svg)](https://github.com/wk-j/asset-downloader/actions)
 [![NuGet](https://img.shields.io/nuget/v/wk.AssetDownloader.svg)](https://www.nuget.org/packages/wk.AssetDownloader)
-[![GitHub release](https://img.shields.io/github/release/wk-j/asset-downloader.svg?style=flat-square)](https://github.com/wk-j/asset-downloader/releases)
 
 ```bash
 dotnet tool install -g wk.AssetDownloader
@@ -18,11 +21,11 @@ wk-asset-downloader owner/repo@version --token token --output output-dir --filte
 ## Example
 
 ```bash
-wk-asset-downloader bcircle/capture-service@latest --token $GITHUB_TOKEN --output .temp
+wk-asset-downloader zyz/capture-service@latest --token $GITHUB --output .temp
   Copying to "temp/ScanService-19.0.13.zip"
   Copying to "temp/ScanService.19.0.13.deb"
   Copying to "temp/ScanService.19.0.13.msi"
 
-wk-asset-downloader bcircle/capture-service@latest --token $GITHUB_TOKEN --output .temp --filter .zip
+wk-asset-downloader zyz/capture-service@latest --token $GITHUB --output .temp --filter .zip
   Copying to "temp/ScanService-19.0.13.zip"
 ```

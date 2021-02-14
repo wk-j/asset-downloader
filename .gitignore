@@ -1,4 +1,6 @@
 .DS_Store
+.ionide
+temp
 
 node_modules
 dist
